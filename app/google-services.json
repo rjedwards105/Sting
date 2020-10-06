@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "777133145566",
+    "firebase_url": "https://sting-15251.firebaseio.com",
+    "project_id": "sting-15251",
+    "storage_bucket": "sting-15251.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777133145566:android:592bc7ec81512538e5314f",
+        "android_client_info": {
+          "package_name": "com.example.sting.registration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777133145566-drl4kt20sp34be650nbfbp3hv2vbi080.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtQr-cNTSA2Tzsei0pfgwS4TUtYzsHDuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777133145566-drl4kt20sp34be650nbfbp3hv2vbi080.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
