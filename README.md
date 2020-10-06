@@ -8,4 +8,4 @@ Basic functioning Social Media App
   - posting
   - 24 hour stories
   - live video
-  - video calles
+  - video calls
