@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+
 import com.example.sting.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,9 +26,12 @@ public class OTPFragment extends Fragment {
         // Required empty public constructor
     }
 
+
     private EditText otp;
     private ProgressBar progressBar;
     private Button verifyBtn;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,12 +45,20 @@ public class OTPFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init(view);
+
+        verifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //((RegisterActivity)getActivity()).setFragment(new );
+            }
+        });
     }
 
-    private void init(View view) {
+    private void init(View view){
         otp = view.findViewById(R.id.otp);
         progressBar = view.findViewById(R.id.progressbar);
         verifyBtn = view.findViewById(R.id.verify_btn);
-
     }
+
+
 }

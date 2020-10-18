@@ -20,6 +20,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.SignInMethodQueryResult;
+
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +34,8 @@ public class CreateAccountFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static final String EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     private EditText email,phone,password,confirmPassword;
     private Button createAccountBtn;
@@ -85,7 +89,7 @@ public class CreateAccountFragment extends Fragment {
                     confirmPassword.setError("Required");
                     return;
                 }
-                if (email.getText().toString().matches(EMAIL_REGEX)){
+                if (!VALID_EMAIL_ADDRESS_REGEX.matcher(email.getText().toString()).find()){
                     email.setError("Please enter a valid Email");
                     return;
                 }
@@ -115,16 +119,23 @@ public class CreateAccountFragment extends Fragment {
 
     private void createAccount(){
         progressBar.setVisibility(View.VISIBLE);
-        firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.fetchSignInMethodsForEmail(email.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                 if (task.isSuccessful()){
-                    ((RegisterActivity)getActivity()).setFragment(new OTPFragment());
+                    if (task.getResult().getSignInMethods().isEmpty()){
+                        ((RegisterActivity)getActivity()).setFragment(new OTPFragment(email.getText().toString(),phone.getText().toString(),password.getText().toString()));
+                    }
+                    else{
+                        email.setError("Email already exists!");
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
                 }
-                else {
+                else{
                     String error = task.getException().getMessage();
                     Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
                 }
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
